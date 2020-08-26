@@ -1,0 +1,3 @@
+STAGING = 'staging'
+DEVELOPMENT = 'development'
+ENVIRONMENT = 'ENVIRONMENT'
