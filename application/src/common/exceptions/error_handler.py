@@ -3,9 +3,8 @@ import traceback
 from datetime import datetime
 
 from flask import request
-from typecheck import TypeCheckError
 
-from application.src.common.exceptions.custom_error import InvalidSourceError, CustomError
+from application.src.common.exceptions.custom_error import CustomError
 from application.src.common.response_utils import error_response
 
 
@@ -57,19 +56,13 @@ class ErrorHandler(object):
                 exception_trace = traceback.format_exc()
                 self.app.logger.error("Exception in %s API:\n%s",
                                       self.api_key, exception_trace)
-                self.app.logger.error("Missing key : " + e.message)
-                return error_response(400, "{} is required".format(e.message))
-            except (ValueError, TypeCheckError) as e:
+                self.app.logger.error("Missing key : " + str(e))
+                return error_response(400, "{} is required".format(str(e)))
+            except ValueError as e:
                 exception_trace = traceback.format_exc()
                 self.app.logger.error("Exception in %s API:\n%s",
                                       self.api_key, exception_trace)
                 return error_response(400, "Bad Request. Incorrect Parameter types")
-            except InvalidSourceError as e:
-                exception_trace = traceback.format_exc()
-                self.app.logger.error("Exception in %s API:\n%s",
-                                      self.api_key, exception_trace)
-                self.app.logger.error("Invalid Source : " + e.message)
-                return error_response(e.error_code, e.msg or "Invalid Source")
             except CustomError as error:
                 exception_trace = traceback.format_exc()
                 self.app.logger.error("Exception in %s API: %s\n%s",

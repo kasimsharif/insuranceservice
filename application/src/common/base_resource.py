@@ -6,7 +6,6 @@ def sanitize_response(response):
     data = None
     status = 200
     headers = {}
-
     if isinstance(response, tuple) and len(response) is 3:
         (data, status, headers) = response
     if isinstance(response, tuple) and len(response) is 5:
@@ -20,7 +19,8 @@ def sanitize_response(response):
 def patch_response_data(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
-        response = sanitize_response(func(*args, **kwargs))
+        resp = func(*args, **kwargs)
+        response = sanitize_response(resp)
         if isinstance(response, tuple) and len(response) is 5:
             status, data, code, message, headers = response
             data = {"responseData": data,
@@ -31,6 +31,8 @@ def patch_response_data(func):
         else:
             data, status, headers = response
 
+        if type(data) not in [list, dict]:
+            return resp
         patched = isinstance(data, dict) and (
             "errorCode" in data or "responseData" in data
         )

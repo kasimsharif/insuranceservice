@@ -1,6 +1,6 @@
 from django.db import models
 
-class InsurancePolicies(models.Model):
+class InsurancePolicy(models.Model):
     MOTOR = "MOTOR"
     HEALTH = "HEALTH"
     TRAVEL = "TRAVEL"
@@ -15,6 +15,6 @@ class InsurancePolicies(models.Model):
     type = models.CharField(max_length=16, choices=insurance_type)
     start_date = models.DateTimeField()
     expiration_date = models.DateTimeField()
-    amount_assured = models.FloatField()
+    amount_insured = models.FloatField()
     created_on = models.DateTimeField(auto_now_add=True, null=True)
     updated_on = models.DateTimeField(auto_now_add=True, null=True)
