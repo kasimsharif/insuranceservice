@@ -1,7 +1,3 @@
-import csv
-
-from django.db.utils import IntegrityError
-
 from application.src.common.exceptions.custom_error import CustomError
 from application.src.dao.insurance_policy import create_new_insurance_policy, get_insurance_by_policy_number, \
     filter_insurance_policy
