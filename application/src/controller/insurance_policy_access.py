@@ -1,6 +1,7 @@
 from application.src.common.exceptions.custom_error import CustomError
 from application.src.dao.insurance_policy import create_new_insurance_policy, get_insurance_by_policy_number, \
     filter_insurance_policy
+from application.src.db.insurance.models import InsurancePolicy
 from application.src.utils.date_time import timestamp_to_datetime, date_to_utc
 
 
@@ -29,6 +30,8 @@ def create_insurance_policy(data):
     policy_number = data["policyNumber"]
     name_of_insured = data["nameOfInsured"]
     type = data["type"]
+    if type not in [InsurancePolicy.MOTOR, InsurancePolicy.TRAVEL, InsurancePolicy.HEALTH]:
+        raise CustomError(400, "Invalid Insurance Type")
     amount_insured = data["amountInsured"]
     start_date = timestamp_to_datetime(data["startDate"])
     expiration_date = timestamp_to_datetime(data["expirationDate"])

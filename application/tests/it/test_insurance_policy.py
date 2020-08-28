@@ -27,6 +27,15 @@ class TestInsurancePolicy(TestCase):
             "startDate": 1598548397000,
             "expirationDate": 1630084360000
         }
+        self.invalid_data = {
+            "userId": 1,
+            "policyNumber": "ABCD",
+            "nameOfInsured": "Kasim Sharif",
+            "type": "MOTR",
+            "amountInsured": 10000,
+            "startDate": 1598548397000,
+            "expirationDate": 1630084360000
+        }
 
     def test_insurance_policy_creation(self):
         """Test Insurance Policy creation"""
@@ -44,6 +53,13 @@ class TestInsurancePolicy(TestCase):
         message = json.loads(res.data)["message"]
         self.assertEqual(res.status_code, 409)
         self.assertEqual(message, "Policy Number: ABCD ,already exists")
+
+    def test_insurance_policy_invalid_insurance_type(self):
+        """Test Insurance Policy creation"""
+        res = self.client().post('/insurance/policy/', data=json.dumps(self.invalid_data))
+        self.assertEqual(res.status_code, 400)
+        message = json.loads(res.data)["message"]
+        self.assertEqual(message, "Invalid Insurance Type")
 
     def test_get_insurance_policy_by_user_id(self):
         """Test Get Insurance policy by User Id """
