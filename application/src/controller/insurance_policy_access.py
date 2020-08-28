@@ -40,7 +40,7 @@ def create_insurance_policy(data):
     try:
         insurance_obj = create_new_insurance_policy(user_id, policy_number, name_of_insured, type, start_date,
                                                     expiration_date, amount_insured)
-    except IntegrityError:
+    except:
         raise CustomError(409, "Policy Number: " + policy_number + " ,already exists")
     response = get_insurance_policy_json(insurance_obj)
     return response
