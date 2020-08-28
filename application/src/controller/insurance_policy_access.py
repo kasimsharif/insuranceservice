@@ -31,7 +31,7 @@ def create_insurance_policy(data):
     name_of_insured = data["nameOfInsured"]
     type = data["type"]
     if type not in [InsurancePolicy.MOTOR, InsurancePolicy.TRAVEL, InsurancePolicy.HEALTH]:
-        raise CustomError(400, "Invalid Insurance Type")
+        raise CustomError(400, "Invalid Insurance Type, correct values [MOTOR / HEALTH / TRAVEL]")
     amount_insured = data["amountInsured"]
     start_date = timestamp_to_datetime(data["startDate"])
     expiration_date = timestamp_to_datetime(data["expirationDate"])
