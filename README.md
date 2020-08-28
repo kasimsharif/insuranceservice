@@ -6,7 +6,35 @@ Postman link : https://www.getpostman.com/collections/8147c7ee0a16c53ee39c
 1. Install Python 3.7
 2. Install virtualenv
 
-# Project Setup
+# Project Setup using scripts
+
+1. export DATABASE variables
+```
+$ export DB_NAME=insurance
+$ export DB_USER=root
+$ export DB_PASSWORD=test@123
+```
+
+2. Setup the project.
+
+```
+$ ./application/bin/setup.sh
+```
+
+3. Run the application.
+
+```
+$ ./application/bin/run.sh
+```
+
+4. To run the test suite.
+
+```
+$ ./application/bin/run_test_suite.sh
+```
+
+
+# To manually setup the project 
 
 1. Create and activate your virtual env.
 ```
