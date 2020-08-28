@@ -2,6 +2,7 @@ import json
 from django.test import TestCase
 
 from application.src.launcher import app
+from application.tests.test_data.data import test_data_1, test_data_2, invalid_insurance_type_data
 
 
 class TestInsurancePolicy(TestCase):
@@ -9,33 +10,9 @@ class TestInsurancePolicy(TestCase):
 
     def setUp(self):
         self.client = app.test_client
-        self.test_data_1 = {
-            "userId": 1,
-            "policyNumber": "ABCD",
-            "nameOfInsured": "Kasim Sharif",
-            "type": "MOTOR",
-            "amountInsured": 10000,
-            "startDate": 1598548397000,
-            "expirationDate": 1630084360000
-        }
-        self.test_data_2 = {
-            "userId": 1,
-            "policyNumber": "ABCD",
-            "nameOfInsured": "Kasim Sharif",
-            "type": "MOTOR",
-            "amountInsured": 10000,
-            "startDate": 1598548397000,
-            "expirationDate": 1630084360000
-        }
-        self.invalid_data = {
-            "userId": 1,
-            "policyNumber": "ABCD",
-            "nameOfInsured": "Kasim Sharif",
-            "type": "MOTR",
-            "amountInsured": 10000,
-            "startDate": 1598548397000,
-            "expirationDate": 1630084360000
-        }
+        self.test_data_1 = test_data_1()
+        self.test_data_2 = test_data_2()
+        self.invalid_data = invalid_insurance_type_data()
 
     def test_insurance_policy_creation(self):
         """Test Insurance Policy creation"""
@@ -89,6 +66,7 @@ class TestInsurancePolicy(TestCase):
         self.assertEqual(res.status_code, 200)
         content_type = res.headers['Content-Type']
         self.assertEqual(content_type, "Content-Type: text/csv; charset=utf-8")
+
 
 if __name__ == '__main__':
     unittest.main()
