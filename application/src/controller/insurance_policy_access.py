@@ -35,10 +35,10 @@ def create_insurance_policy(data):
     expiration_date = timestamp_to_datetime(data["expirationDate"])
     date_now = get_datetime_now()
     if date_now.date() > start_date.date():
-        raise CustomError(400, "Invalid Start date, it must be equal/greater then today's date")
+        raise CustomError(400, "Invalid Start date, it must be equal/greater then today's date in epoch milliseconds format")
 
     if expiration_date.date() <= start_date.date():
-        raise CustomError(400, "Expiration date must be greater then start date")
+        raise CustomError(400, "Expiration date must be greater then start date in epoch milliseconds format")
     insurance_obj = InMemoryInsurancePolicy.create_new_insurance_policy(user_id, policy_number, name_of_insured, type, start_date,
                                                 expiration_date, amount_insured)
     if not insurance_obj:

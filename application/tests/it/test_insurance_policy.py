@@ -76,14 +76,14 @@ class TestInsurancePolicy(TestCase):
         res = self.client().post('/insurance/policy/', data=json.dumps(self.invalid_start_date))
         self.assertEqual(res.status_code, 400)
         message = json.loads(res.data)["message"]
-        self.assertEqual(message, "Invalid Start date, it must be equal/greater then today's date")
+        self.assertEqual(message, "Invalid Start date, it must be equal/greater then today's date in epoch milliseconds format")
 
     def test_8_invalid_expiration_date(self):
         """Test Expiration date less than start date"""
         res = self.client().post('/insurance/policy/', data=json.dumps(self.invalid_expiration_date))
         self.assertEqual(res.status_code, 400)
         message = json.loads(res.data)["message"]
-        self.assertEqual(message, "Expiration date must be greater then start date")
+        self.assertEqual(message, "Expiration date must be greater then start date in epoch milliseconds format")
 
 
 if __name__ == '__main__':
