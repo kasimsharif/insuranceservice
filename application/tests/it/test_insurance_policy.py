@@ -1,8 +1,10 @@
 import json
-from django.test import TestCase
+import unittest
+from unittest.case import TestCase
 
 from application.src.launcher import app
-from application.tests.test_data.data import test_data_1, test_data_2, invalid_insurance_type_data
+from application.tests.test_data.data import test_data_1, test_data_2, invalid_insurance_type_data, test_data_3, \
+    test_data_4
 
 
 class TestInsurancePolicy(TestCase):
@@ -12,9 +14,11 @@ class TestInsurancePolicy(TestCase):
         self.client = app.test_client
         self.test_data_1 = test_data_1()
         self.test_data_2 = test_data_2()
+        self.test_data_3 = test_data_3()
+        self.test_data_4 = test_data_4()
         self.invalid_data = invalid_insurance_type_data()
 
-    def test_insurance_policy_creation(self):
+    def test_1_insurance_policy_creation(self):
         """Test Insurance Policy creation"""
         res = self.client().post('/insurance/policy/', data=json.dumps(self.test_data_1))
         response_data = json.loads(res.data)["responseData"]
@@ -22,46 +26,44 @@ class TestInsurancePolicy(TestCase):
         self.assertEqual(self.test_data_1['userId'], response_data['userId'])
         self.assertEqual(self.test_data_1['policyNumber'], response_data['policyNumber'])
 
-    def test_insurance_policy_duplicate_policy_number(self):
+    def test_2_insurance_policy_duplicate_policy_number(self):
         """Test Insurance Policy creation"""
         res = self.client().post('/insurance/policy/', data=json.dumps(self.test_data_2))
         self.assertEqual(res.status_code, 200)
         res = self.client().post('/insurance/policy/', data=json.dumps(self.test_data_2))
         message = json.loads(res.data)["message"]
         self.assertEqual(res.status_code, 409)
-        self.assertEqual(message, "Policy Number: ABCD ,already exists")
+        self.assertEqual(message, "Policy Number: 6316-14738430-02-001 ,already exists")
 
-    def test_insurance_policy_invalid_insurance_type(self):
+    def test_3_insurance_policy_invalid_insurance_type(self):
         """Test Insurance Policy creation"""
         res = self.client().post('/insurance/policy/', data=json.dumps(self.invalid_data))
         self.assertEqual(res.status_code, 400)
         message = json.loads(res.data)["message"]
-        self.assertEqual(message, "Invalid Insurance Type")
+        self.assertEqual(message, "Invalid Insurance Type, correct values [MOTOR / HEALTH / TRAVEL]")
 
-    def test_get_insurance_policy_by_user_id(self):
+    def test_4_get_insurance_policy_by_user_id(self):
         """Test Get Insurance policy by User Id """
-        res = self.client().post('/insurance/policy/', data=json.dumps(self.test_data_1))
+        res = self.client().post('/insurance/policy/', data=json.dumps(self.test_data_3))
         self.assertEqual(res.status_code, 200)
-        res = self.client().get('/insurance/policy/?userId=1')
+        res = self.client().get('/insurance/policy/?userId=2')
         self.assertEqual(res.status_code, 200)
         response_data = json.loads(res.data)["responseData"]
-        self.assertEqual(self.test_data_1['userId'], response_data[0]["userId"])
-        self.assertEqual(self.test_data_1['policyNumber'], response_data[0]["policyNumber"])
+        self.assertEqual(self.test_data_3['userId'], response_data[len(response_data) - 1]["userId"])
+        self.assertEqual(self.test_data_3['policyNumber'], response_data[len(response_data) - 1]["policyNumber"])
 
-    def test_get_insurance_policy_by_policy_number(self):
+    def test_5_get_insurance_policy_by_policy_number(self):
         """Test Get Insurance policy by policy number"""
-        res = self.client().post('/insurance/policy/', data=json.dumps(self.test_data_1))
-        self.assertEqual(res.status_code, 200)
-        res = self.client().get('/insurance/policy/ABCD/')
+        self.client().post('/insurance/policy/', data=json.dumps(self.test_data_4))
+        res = self.client().get('/insurance/policy/6316-14738430-02-003/')
         self.assertEqual(res.status_code, 200)
         response_data = json.loads(res.data)["responseData"]
-        self.assertEqual(self.test_data_1['userId'], response_data["userId"])
-        self.assertEqual(self.test_data_1['policyNumber'], response_data["policyNumber"])
+        self.assertEqual(self.test_data_4['userId'], response_data["userId"])
+        self.assertEqual(self.test_data_4['policyNumber'], response_data["policyNumber"])
 
-    def test_get_insurance_policy_csv_format(self):
+    def test_6_get_insurance_policy_csv_format(self):
         """Test Get Insurance policy csv format"""
-        res = self.client().post('/insurance/policy/', data=json.dumps(self.test_data_1))
-        self.assertEqual(res.status_code, 200)
+        self.client().post('/insurance/policy/', data=json.dumps(self.test_data_1))
         res = self.client().get('/insurance/policy/?userId=1&format=csv')
         self.assertEqual(res.status_code, 200)
         content_type = res.headers['Content-Type']
