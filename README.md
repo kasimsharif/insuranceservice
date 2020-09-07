@@ -1,7 +1,7 @@
 # Insurance Service
 
 CRUD API for Insurance service <br><br>
-Postman link : https://www.getpostman.com/collections/26d7bef975d72dfbc382
+
 # Pre requisite
 1. Install Python 3.7
 2. Install virtualenv
@@ -37,7 +37,7 @@ $ source .python-version/bin/activate
 
 2. Install requirements.txt
 ```
-$ python install -r requirements.txt
+$ pip install -r requirements.txt
 ```
 
 4. Run the integration tests by:
@@ -51,3 +51,6 @@ $ python application/tests/it/test_insurance_policy.py
 $ export ENVIRONMENT=development; export PYTHONPATH=$PWD
 $ python application/src/launcher.py
 ```
+
+Import postman link and check the API's <br>
+Postman link : https://www.getpostman.com/collections/26d7bef975d72dfbc382
