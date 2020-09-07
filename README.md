@@ -8,26 +8,19 @@ Postman link : https://www.getpostman.com/collections/8147c7ee0a16c53ee39c
 
 # Project Setup using scripts
 
-1. export DATABASE variables
-```
-$ export DB_NAME=insurance
-$ export DB_USER=root
-$ export DB_PASSWORD=test@123
-```
-
-2. Setup the project.
+1. Setup the project.
 
 ```
 $ ./application/bin/setup.sh
 ```
 
-3. Run the application.
+2. Run the application.
 
 ```
 $ ./application/bin/run.sh
 ```
 
-4. To run the test suite.
+3. To run the test suite.
 
 ```
 $ ./application/bin/run_test_suite.sh
@@ -47,33 +40,14 @@ $ source .python-version/bin/activate
 $ python install -r requirements.txt
 ```
 
-3. Create database "insurance"
-
-```
-$ mysql -u root -p
-$ mysql> create database insurance
-```
-
-4. export DATABASE variables
-```
-$ export DB_NAME=insurance
-$ export DB_USER=root
-$ export DB_PASSWORD=test@123
-```
-
 4. Run the integration tests by:
 ```
-$ export ENVIRONMENT=development;export DJANGO_SETTINGS_MODULE=application.src.db.settings.development; export PYTHONPATH=$PWD
-$ python application/src/db/manage.py test
-```
-5. Run the Django migrations:
-```
-$ export ENVIRONMENT=development;export DJANGO_SETTINGS_MODULE=application.src.db.settings.development; export PYTHONPATH=$PWD
-$ python application/src/db/manage.py migrate
+$ export ENVIRONMENT=development; export PYTHONPATH=$PWD
+$ python application/tests/it/test_insurance_policy.py
 ```
 
 5. Run application by:
 ```
-$ export ENVIRONMENT=development;export DJANGO_SETTINGS_MODULE=application.src.db.settings.development; export PYTHONPATH=$PWD
+$ export ENVIRONMENT=development; export PYTHONPATH=$PWD
 $ python application/src/launcher.py
 ```

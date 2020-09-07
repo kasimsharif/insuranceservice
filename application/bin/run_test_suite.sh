@@ -3,4 +3,4 @@
 source .python-version/bin/activate
 export ENVIRONMENT=development;
 export PYTHONPATH=$PWD;
-python application/src/db/manage.py test
+python application/tests/it/test_insurance_policy.py
