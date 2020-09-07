@@ -1,6 +1,3 @@
-import django
-django.setup()
-
 from application.src.rest.insurance_policy import InsurancePolicy
 from application.src.rest.ping import Ping
 from os.path import dirname, abspath
