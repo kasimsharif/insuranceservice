@@ -2,6 +2,9 @@
 
 API for Insurance service <br><br>
 
+Import postman link and check the API's <br>
+Postman link : https://www.getpostman.com/collections/26d7bef975d72dfbc382
+
 # Pre requisite
 1. Install Python 3.7
 2. Install virtualenv
@@ -51,6 +54,3 @@ $ python application/tests/it/test_insurance_policy.py
 $ export ENVIRONMENT=development; export PYTHONPATH=$PWD
 $ python application/src/launcher.py
 ```
-
-Import postman link and check the API's <br>
-Postman link : https://www.getpostman.com/collections/26d7bef975d72dfbc382
