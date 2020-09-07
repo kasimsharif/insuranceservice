@@ -3,6 +3,8 @@ import os
 
 from application.src.config.environments import get_configurations
 from application.src.config.environments.constants import DEVELOPMENT, ENVIRONMENT
+from application.src.dao.inmemory_insurance_policy import InMemoryInsurancePolicy
+from application.src.utils.date_time import timestamp_to_datetime
 
 log_format = ' '.join([
     '[%(asctime)s]',
@@ -13,6 +15,18 @@ log_format = ' '.join([
 ])
 
 formatter = logging.Formatter(log_format)
+
+
+def setup_test_data():
+    InMemoryInsurancePolicy.create_new_insurance_policy(1, "6316-14738430-02-0010", "Kasim Sharif", "MOTOR",
+                                                        timestamp_to_datetime(1609326432000),
+                                                        timestamp_to_datetime(1640862432000), 10000)
+    InMemoryInsurancePolicy.create_new_insurance_policy(2, "6316-14738430-02-0011", "Hasan Sharif", "HEALTH",
+                                                        timestamp_to_datetime(1609326432000),
+                                                        timestamp_to_datetime(1640862432000), 100000)
+    InMemoryInsurancePolicy.create_new_insurance_policy(3, "6316-14738430-02-0012", "Sanket Patil", "TRAVEL",
+                                                        timestamp_to_datetime(1609326432000),
+                                                        timestamp_to_datetime(1640862432000), 100000)
 
 
 def setup_app(app):
@@ -31,3 +45,6 @@ def setup_app(app):
     app.logger.setLevel(logging.DEBUG)
 
     app.logger.info("Loaded environment: " + env)
+    app.logger.info("Initializing the test data")
+    setup_test_data()
+    app.logger.info("test data initialize")

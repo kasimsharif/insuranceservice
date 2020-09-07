@@ -5,8 +5,8 @@ def test_data_1():
         "nameOfInsured": "Kasim Sharif",
         "type": "MOTOR",
         "amountInsured": 10000,
-        "startDate": 1598548397000,
-        "expirationDate": 1630084360000
+        "startDate": 1631012832000,
+        "expirationDate": 1662548832000
     }
 
 
@@ -17,8 +17,8 @@ def test_data_2():
         "nameOfInsured": "Kasim Sharif",
         "type": "MOTOR",
         "amountInsured": 10000,
-        "startDate": 1598548397000,
-        "expirationDate": 1630084360000
+        "startDate": 1631012832000,
+        "expirationDate": 1662548832000
     }
 
 
@@ -29,8 +29,8 @@ def test_data_3():
         "nameOfInsured": "Hasan Sharif",
         "type": "TRAVEL",
         "amountInsured": 10000,
-        "startDate": 1598548397000,
-        "expirationDate": 1630084360000
+        "startDate": 1631012832000,
+        "expirationDate": 1662548832000
     }
 
 
@@ -41,10 +41,32 @@ def test_data_4():
         "nameOfInsured": "Hasan Sharif",
         "type": "HEALTH",
         "amountInsured": 10000,
-        "startDate": 1598548397000,
-        "expirationDate": 1630084360000
+        "startDate": 1631012832000,
+        "expirationDate": 1662548832000
     }
 
+
+def invalid_start_date():
+    return {
+        "userId": 1,
+        "policyNumber": "6316-14738430-02-004",
+        "nameOfInsured": "Kasim Sharif",
+        "type": "MOTOR",
+        "amountInsured": 10000,
+        "startDate": 1567854432000,
+        "expirationDate": 1662548832000
+    }
+
+def invalid_expiration_date():
+    return {
+        "userId": 1,
+        "policyNumber": "6316-14738430-02-004",
+        "nameOfInsured": "Kasim Sharif",
+        "type": "MOTOR",
+        "amountInsured": 10000,
+        "startDate": 1631012832000,
+        "expirationDate": 1567854432000
+    }
 
 def invalid_insurance_type_data():
     return {
@@ -53,6 +75,6 @@ def invalid_insurance_type_data():
         "nameOfInsured": "Kasim Sharif",
         "type": "MOTR",
         "amountInsured": 10000,
-        "startDate": 1598548397000,
-        "expirationDate": 1630084360000
+        "startDate": 1631012832000,
+        "expirationDate": 1662548832000
     }

@@ -1,7 +1,7 @@
 # Insurance Service
 
 CRUD API for Insurance service <br><br>
-Postman link : https://www.getpostman.com/collections/8147c7ee0a16c53ee39c
+Postman link : https://www.getpostman.com/collections/26d7bef975d72dfbc382
 # Pre requisite
 1. Install Python 3.7
 2. Install virtualenv

@@ -4,7 +4,7 @@ from unittest.case import TestCase
 
 from application.src.launcher import app
 from application.tests.test_data.data import test_data_1, test_data_2, invalid_insurance_type_data, test_data_3, \
-    test_data_4
+    test_data_4, invalid_start_date, invalid_expiration_date
 
 
 class TestInsurancePolicy(TestCase):
@@ -16,6 +16,8 @@ class TestInsurancePolicy(TestCase):
         self.test_data_2 = test_data_2()
         self.test_data_3 = test_data_3()
         self.test_data_4 = test_data_4()
+        self.invalid_start_date = invalid_start_date()
+        self.invalid_expiration_date = invalid_expiration_date()
         self.invalid_data = invalid_insurance_type_data()
 
     def test_1_insurance_policy_creation(self):
@@ -68,6 +70,20 @@ class TestInsurancePolicy(TestCase):
         self.assertEqual(res.status_code, 200)
         content_type = res.headers['Content-Type']
         self.assertEqual(content_type, "Content-Type: text/csv; charset=utf-8")
+
+    def test_7_invalid_start_date(self):
+        """Test Invalid start date less then today's date"""
+        res = self.client().post('/insurance/policy/', data=json.dumps(self.invalid_start_date))
+        self.assertEqual(res.status_code, 400)
+        message = json.loads(res.data)["message"]
+        self.assertEqual(message, "Invalid Start date, it must be equal/greater then today's date")
+
+    def test_8_invalid_expiration_date(self):
+        """Test Expiration date less than start date"""
+        res = self.client().post('/insurance/policy/', data=json.dumps(self.invalid_expiration_date))
+        self.assertEqual(res.status_code, 400)
+        message = json.loads(res.data)["message"]
+        self.assertEqual(message, "Expiration date must be greater then start date")
 
 
 if __name__ == '__main__':
