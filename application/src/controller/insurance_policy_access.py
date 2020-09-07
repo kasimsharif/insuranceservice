@@ -1,6 +1,6 @@
 from application.src.common.exceptions.custom_error import CustomError
 from application.src.dao.inmemory_insurance_policy import InMemoryInsurancePolicy, InsurancePolicy
-from application.src.utils.date_time import timestamp_to_datetime, date_to_utc
+from application.src.utils.date_time import timestamp_to_datetime, date_to_utc, get_datetime_now
 
 
 def get_insurance_policy_json(insurance_obj):
@@ -33,6 +33,12 @@ def create_insurance_policy(data):
     amount_insured = data["amountInsured"]
     start_date = timestamp_to_datetime(data["startDate"])
     expiration_date = timestamp_to_datetime(data["expirationDate"])
+    date_now = get_datetime_now()
+    if date_now.date() > start_date.date():
+        raise CustomError(400, "Invalid Start date, it must be equal/greater then today's date")
+
+    if expiration_date.date() <= start_date.date():
+        raise CustomError(400, "Expiration date must be greater then start date")
     insurance_obj = InMemoryInsurancePolicy.create_new_insurance_policy(user_id, policy_number, name_of_insured, type, start_date,
                                                 expiration_date, amount_insured)
     if not insurance_obj:
