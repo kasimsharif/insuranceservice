@@ -1,6 +1,6 @@
 # Insurance Service
 
-CRUD API for Insurance service <br><br>
+API for Insurance service <br><br>
 
 # Pre requisite
 1. Install Python 3.7
